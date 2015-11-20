@@ -5,8 +5,8 @@ run_analysis <- function() {
   validateFiles()
   
   # Read the required files
-  activity_labels <- read.table("UCI_HAR_Dataset/activity_labels.txt", col.names=c("activity_id", "activity_name"))
-  feature_names <- read.table("UCI_HAR_Dataset/features.txt")[,2]
+  activity_labels <- read.table("UCI_HAR_Dataset/activity_labels.txt", col.names=c("activityId", "activityName"))
+  feature_names <- read.table("UCI_HAR_Dataset/features.txt", col.names=c("featureId", "featureName"))
   
   test_subjects <- read.table("UCI_HAR_Dataset/test/subject_test.txt")
   test_set <- read.table("UCI_HAR_Dataset/test/X_test.txt")
