@@ -20,12 +20,21 @@ run_analysis <- function() {
   
   cat("Merging datasets...\n")
   X <- rbind(train_set, test_set)
+  
   cat("Extracting features...\n")
   names(X) <- features$featureName
   X <- X[, extractedFeatures]
+  
   cat("Merging subjects")
   subjects <- rbind(train_subjects, test_subjects)
   names(subjects) <- "subjectId"
+  
+  cat("Merging activities")
+  Y <- rbind(train_labels, test_labels)
+  names(Y) <- "activityId"
+  activity <- merge(Y, activities, by="activityId")
+  
+  
 }
 
 validateFiles <- function() {
