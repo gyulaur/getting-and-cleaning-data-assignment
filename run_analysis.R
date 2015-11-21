@@ -5,8 +5,9 @@ run_analysis <- function() {
   validateFiles()
   
   # Read the required files
-  activity_labels <- read.table("UCI_HAR_Dataset/activity_labels.txt", col.names=c("activityId", "activityName"))
-  feature_names <- read.table("UCI_HAR_Dataset/features.txt", col.names=c("featureId", "featureName"))
+  cat("Reading input files...\n")
+  activities <- read.table("UCI_HAR_Dataset/activity_labels.txt", col.names=c("activityId", "activityName"))
+  features <- read.table("UCI_HAR_Dataset/features.txt", col.names=c("featureId", "featureName"))
   
   test_subjects <- read.table("UCI_HAR_Dataset/test/subject_test.txt")
   test_set <- read.table("UCI_HAR_Dataset/test/X_test.txt")
@@ -15,6 +16,9 @@ run_analysis <- function() {
   train_subjects <- read.table("UCI_HAR_Dataset/train/subject_train.txt")
   train_set <- read.table("UCI_HAR_Dataset/train/X_train.txt")
   train_labels <- read.table("UCI_HAR_Dataset/train/y_train.txt")
+  
+  cat("Merging data...\n")
+  X <- rbind(test_set, train_set)
 }
 
 validateFiles <- function() {
