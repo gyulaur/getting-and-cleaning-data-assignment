@@ -1,4 +1,4 @@
-# author: Gyula Magyar for the coursera course "Getting and Cleaning Data"
+# author: Gyula Magyar, for the coursera course "Getting and Cleaning Data"
 
 run_analysis <- function() {
   # Basic validation to ensure that the required input files are in place
@@ -25,16 +25,19 @@ run_analysis <- function() {
   names(X) <- features$featureName
   X <- X[, extractedFeatures]
   
-  cat("Merging subjects")
+  cat("Merging subjects\n")
   subjects <- rbind(train_subjects, test_subjects)
   names(subjects) <- "subjectId"
   
-  cat("Merging activities")
+  cat("Merging activities\n")
   Y <- rbind(train_labels, test_labels)
   names(Y) <- "activityId"
-  activity <- merge(Y, activities, by="activityId")
   
-  
+  cat("Merging dataframes")
+  data <- cbind(subjects, X, Y)
+  data <- merge(data, activities, by="activityId")
+  names(data) <- gsub("\\(\\)","", names(data))
+  data
 }
 
 validateFiles <- function() {
