@@ -18,10 +18,14 @@ run_analysis <- function() {
   train_set <- read.table("UCI_HAR_Dataset/train/X_train.txt")
   train_labels <- read.table("UCI_HAR_Dataset/train/y_train.txt")
   
-  cat("Merging data...\n")
-  X <- rbind(test_set, train_set)
+  cat("Merging datasets...\n")
+  X <- rbind(train_set, test_set)
+  cat("Extracting features...\n")
   names(X) <- features$featureName
   X <- X[, extractedFeatures]
+  cat("Merging subjects")
+  subjects <- rbind(train_subjects, test_subjects)
+  names(subjects) <- "subjectId"
 }
 
 validateFiles <- function() {
