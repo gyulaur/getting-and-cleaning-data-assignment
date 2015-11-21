@@ -1,5 +1,8 @@
 # author: Gyula Magyar, for the coursera course "Getting and Cleaning Data"
 
+library(dplyr)
+library(reshape2)
+
 run_analysis <- function() {
   # Basic validation to ensure that the required input files are in place
   validateFiles()
@@ -35,9 +38,13 @@ run_analysis <- function() {
   
   cat("Merging dataframes")
   data <- cbind(subjects, X, Y)
-  data <- merge(data, activities, by="activityId")
+  data <- merge(activities, data, by="activityId")
+  data <- select(data, select = -activityId)
   names(data) <- gsub("\\(\\)","", names(data))
-  data
+  tidy_data <- melt(data, id = c("subjectId", "activityName"))
+  tidy_data <- dcast(tidy_data, subjectId + activityName ~ variable, mean)
+  write.table(tidy_data, file="tidy_data.txt", row.names=FALSE)
+  tidy_data
 }
 
 validateFiles <- function() {
