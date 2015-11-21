@@ -8,6 +8,7 @@ run_analysis <- function() {
   cat("Reading input files...\n")
   activities <- read.table("UCI_HAR_Dataset/activity_labels.txt", col.names=c("activityId", "activityName"))
   features <- read.table("UCI_HAR_Dataset/features.txt", col.names=c("featureId", "featureName"))
+  extractedFeatures <- grep("-mean\\(\\)|-std\\(\\)", features$featureName)
   
   test_subjects <- read.table("UCI_HAR_Dataset/test/subject_test.txt")
   test_set <- read.table("UCI_HAR_Dataset/test/X_test.txt")
@@ -19,6 +20,8 @@ run_analysis <- function() {
   
   cat("Merging data...\n")
   X <- rbind(test_set, train_set)
+  names(X) <- features$featureName
+  X <- X[, extractedFeatures]
 }
 
 validateFiles <- function() {
